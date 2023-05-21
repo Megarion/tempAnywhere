@@ -19,23 +19,25 @@ function App() {
     <div className='center full'>
         <div>
             <div className='inlineDisplay center'>
-                <div className='center'>
-                    <img src="/sun-behind-rain-cloud.svg" alt="image" />
+                <img src="/sun-behind-rain-cloud.svg" alt="hi there" className='imgFit' />
+                <div className='center' style={{width: "40vw",display: ac? "none":"flex"}}>
+                    <div>
+                        <h2 className='centerText'>Temperature Anywhere</h2>
+                        <h3 className='centerText'>{time}</h3>
+                    </div>
                 </div>
-                <div className='center' style={{display: ac? "none":"flex"}}>
-                    <div className='centerV'>
-                        <div>
-                            <h2 className='centerText'>Temperature Anywhere</h2>
-                            <h3 className='centerText'>{time}</h3>
-                        </div>
+                <div className='center' style={{width: "40vw",display: !ac? "none":"flex"}}>
+                    <div>
+                        <button className="inlineButton">Undo</button>
+                        <button className="inlineButton">Redo</button><br/>
+                        <button className="inlineButton">Clear</button>
+                        <button className="inlineButton">Save</button>
                     </div>
                 </div>
                 <div className='center'>
-                    <div className='centerV'>
-                        <button onClick={() => {
-                            setAc(!ac);
-                        }}>Toggle actions</button>
-                    </div>
+                    <button onClick={() => {
+                        setAc(!ac);
+                    }}>Toggle actions</button>
                 </div>
             </div>
             <Map />

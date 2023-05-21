@@ -9,6 +9,7 @@
 .center {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .full {
@@ -38,13 +39,15 @@ pre {
     padding: 0 50px;
 }
 
-.inlineDisplay>div>img {
-    max-height: 80%;
+.imgFit {
+    height: 120px;
 }
 
-.centerV {
-    display : flex;
-    align-items : center;
+.inlineButton {
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    width: 100px;
 }
 
 /* .inlineDisplay {
