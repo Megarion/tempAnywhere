@@ -6,10 +6,17 @@
     text-align: center;
 } */
 
-#center {
+.center {
     display: flex;
     justify-content: center;
+}
+
+.full {
     width: 100vw;
+}
+
+.centerText {
+    text-align: center;
 }
 
 pre {
@@ -21,4 +28,25 @@ pre {
     word-wrap: break-word;             /* Internet Explorer 5.5+ */
 }
 
-.leaflet-container { height: 70vh; width: 80vw; }
+.leaflet-container { height: 70vh; width: 80vw; margin: 10px; }
+
+.inlineDisplay {
+    height: 150px;
+}
+
+.inlineDisplay>div {
+    padding: 0 50px;
+}
+
+.inlineDisplay>div>img {
+    max-height: 80%;
+}
+
+.centerV {
+    display : flex;
+    align-items : center;
+}
+
+/* .inlineDisplay {
+    display: flex;
+} */

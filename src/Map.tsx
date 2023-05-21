@@ -6,7 +6,6 @@ import axios from 'axios'
 // @ts-ignore
 function TempMark(props) {
     const {coords,remove} = props;
-    
 
     // .env later
     const username=import.meta.env.VITE_USERNAME;
@@ -16,15 +15,20 @@ function TempMark(props) {
 
     let [temp, setTemp] = useState(null);
 
+    let time = new Date();
+    let year = time.getUTCFullYear();
+    let month = time.getUTCMonth()+1;
+    let day = time.getUTCDate();
+    let hour = time.getUTCHours();
+
     // https://login.meteomatics.com/api/v1/token
     // https://meteomatics.com/url-creator/
     useEffect(() => {
         axios.get(`https://login.meteomatics.com/api/v1/token`, {
             headers: {'Authorization': 'Basic ' + btoa(username + ":" + password)}
         }).then(response => {
-            console.log("SUCCESS", response.data.access_token);
             token = response.data.access_token
-            axios.get(`https://api.meteomatics.com/2023-05-20T21:50:00.000+07:00/t_2m:C/${coords.lat},${coords.lng}/json?model=mix&access_token=${token}`, {
+            axios.get(`https://api.meteomatics.com/${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day}T${hour.toString().length == 1? "0" : ""}${hour}:00:00.000Z/t_2m:C/${coords.lat},${coords.lng}/json?model=mix&access_token=${token}`, {
                 headers: {}
             }).then(dataresponse => {
                 console.log("SUCCESS", dataresponse);
@@ -80,15 +84,13 @@ function LocationMarker() {
 
 function Map() {
     return <>
-    <div id='center'>
-        <MapContainer center={[51.505, -0.09]} zoom={2} scrollWheelZoom={true}>
-            <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' 
-                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-            />
-            <LocationMarker/>
-        </MapContainer>
-    </div>
+    <MapContainer center={[51.505, -0.09]} zoom={2} scrollWheelZoom={true}>
+        <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' 
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        />
+        <LocationMarker/>
+    </MapContainer>
     </>;
 }
 
