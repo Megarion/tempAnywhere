@@ -2,9 +2,11 @@ import './App.css';
 import Map from './Map';
 import { useState, useEffect } from 'react';
 
+// @ts-ignore
 function App() {
     let [time, setTime] = useState<string>("");
     let [ac, setAc] = useState<boolean>(false);
+    const [show, setShow] = useState<boolean[]>([]);
 
     function updateDate() {
         let time = new Date();
@@ -14,6 +16,34 @@ function App() {
 
     setInterval(updateDate, 60000);
     useEffect(updateDate, []);
+
+    // Is an array of pairs
+    // First element in pair:
+    // 1: Remove, 2: Add, 3: Clear
+    let interactions:number[] = [];
+    let step = 0;
+
+    function stepInteraction(interaction:number) {
+        interactions.splice(step+1);
+        interactions.push()
+        step++;
+    }
+
+    function handleRemove(key:number) {
+        let newShow = show.slice();
+        newShow[key]=false;
+        setShow(newShow);
+        interactions.push([])
+        stepInteraction()
+    }
+
+    function handleShow() {
+        setShow([...show, true]);
+    }
+
+    function clear() {
+        setShow(Array(show.length).fill(false));
+    }
 
     return <>
     <div className='center full'>
@@ -30,7 +60,7 @@ function App() {
                     <div>
                         <button className="inlineButton">Undo</button>
                         <button className="inlineButton">Redo</button><br/>
-                        <button className="inlineButton">Clear</button>
+                        <button onClick={clear} className="inlineButton">Clear</button>
                         <button className="inlineButton">Save</button>
                     </div>
                 </div>
@@ -40,7 +70,12 @@ function App() {
                     }}>Toggle actions</button>
                 </div>
             </div>
-            <Map />
+            <Map remove={handleRemove} show={handleShow} isShown={show}/>
+            <div className='center'>
+                <div>
+                    <button className="inlineButton">Instructions</button>
+                </div>
+            </div>
         </div>
     </div>
     </>;

@@ -57,39 +57,36 @@ function TempMark(props) {
     // (${coords.lat}, ${coords.lng})
 }
 
-function LocationMarker() {
+// @ts-ignore
+function LocationMarker(props) {
+    const { remove, show, isShown } = props
     const [lines, setLines] = useState<number[]>([]);
     const [coords, setCoords] = useState<LatLng[]>([]); 
-    const [show, setShow] = useState<boolean[]>([]);
     const map = useMapEvents({
         click(e) {
             const pos = e.latlng;
             map.flyTo(pos, map.getZoom());
             setLines([...lines, lines.length]);
             setCoords([...coords, pos]);
-            setShow([...show, true]);
+            show();
         },
     });
 
-    const renderElement = <div>{lines.map(m => show[m]? <TempMark key={m} remove={()=>{handleRemove(m)}} count={m} coords={coords[m]}></TempMark> : null)}</div>;
-
-    function handleRemove(key:number) {
-        let newShow = show.slice();
-        newShow[key]=false;
-        setShow(newShow);
-    }
+    const renderElement = <div>{lines.map(m => isShown[m]? <TempMark key={m} remove={()=>{remove(m)}} count={m} coords={coords[m]}></TempMark> : null)}</div>;
 
     return renderElement;
 }
 
-function Map() {
+// @ts-ignore
+function Map(props) {
+    const {remove, show, isShown} = props;
     return <>
     <MapContainer center={[51.505, -0.09]} zoom={2} scrollWheelZoom={true}>
         <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' 
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-        <LocationMarker/>
+        <LocationMarker remove={remove} show={show} isShown={isShown}/>
     </MapContainer>
     </>;
 }

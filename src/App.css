@@ -2,9 +2,9 @@
 
 } */
 
-/* body {
-    text-align: center;
-} */
+body {
+    overflow-x: hidden;
+}
 
 .center {
     display: flex;
@@ -29,7 +29,7 @@ pre {
     word-wrap: break-word;             /* Internet Explorer 5.5+ */
 }
 
-.leaflet-container { height: 70vh; width: 80vw; margin: 10px; }
+.leaflet-container { height: 60vh; width: 80vw; margin: 10px; }
 
 .inlineDisplay {
     height: 150px;
@@ -47,7 +47,7 @@ pre {
     display: inline-block;
     vertical-align: top;
     margin: 5px;
-    width: 100px;
+    width: 170px;
 }
 
 /* .inlineDisplay {
