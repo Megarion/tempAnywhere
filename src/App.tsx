@@ -4,52 +4,121 @@ import { useState, useEffect } from 'react';
 
 // @ts-ignore
 function App() {
-    let [time, setTime] = useState<string>("");
-    let [ac, setAc] = useState<boolean>(false);
+    const [time, setTime] = useState<string>("");
+    const [ac, setAc] = useState<boolean>(false);
     const [show, setShow] = useState<boolean[]>([]);
+    // Is an array of pairs
+    // First element in pair:
+    // 1: Remove, 2: Add, 3: Clear
+    const [interactions, setInteractions] = useState<(number|boolean[])[][]>([])
+    const [step, setStep] = useState<number>(0)
 
     function updateDate() {
-        let time = new Date();
-        let hour = time.getUTCHours();
-        setTime(`Update time: ${time.toLocaleDateString()} ${hour.toString().length == 1? "0" : ""}${hour}:00:00 (UTC)`);
+        let ttime = new Date();
+        let hour = ttime.getUTCHours();
+        setTime(`Update time: ${ttime.toLocaleDateString()} ${hour.toString().length == 1? "0" : ""}${hour}:00:00 (UTC)`);
     }
 
     setInterval(updateDate, 60000);
     useEffect(updateDate, []);
 
-    // Is an array of pairs
-    // First element in pair:
-    // 1: Remove, 2: Add, 3: Clear
-    let interactions:number[] = [];
-    let step = 0;
-
-    function stepInteraction(interaction:number) {
-        interactions.splice(step+1);
-        interactions.push()
-        step++;
+    function newInteraction(interaction:(number|boolean[])[]) {
+        setStep(step+1);
+        let newInteractions = interactions
+        newInteractions.splice(step);
+        newInteractions.push(interaction);
+        setInteractions(newInteractions);
     }
 
-    function handleRemove(key:number) {
+    function undo() {
+        console.log(step, interactions);
+        if (step<=0) {
+            return;
+        }
+        setStep(step-1);
+        reverseInteraction();
+    }
+
+    function redo() {
+        console.log(step, interactions);
+        if (step >= interactions.length) {
+            return;
+        }
+        setStep(step+1);
+        reverseInteraction(false);
+    }
+
+    function reverseInteraction(r=true) {
+        const i = interactions[r? step-1 : step];
+        switch (i[0]) {
+            case 1:
+                if (r) {
+                    // @ts-ignore
+                    handleAdd(i[1]);
+                } else {
+                    // @ts-ignore
+                    handleRemove(i[1], false);
+                }
+                break;
+
+            case 2:
+                if (!r) {
+                    // @ts-ignore
+                    handleAdd(i[1]);
+                } else {
+                    // @ts-ignore
+                    handleRemove(i[1], false);
+                }
+                break;
+
+            case 3:
+                if (r) {
+                    // @ts-ignore
+                    setShow(i[1]);
+                } else {
+                    // @ts-ignore
+                    clear(false);
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    function handleAdd(key:number) {
+        let newShow = show.slice();
+        newShow[key]=true;
+        setShow(newShow);
+    }
+
+    function handleRemove(key:number, interact=true) {
         let newShow = show.slice();
         newShow[key]=false;
         setShow(newShow);
-        interactions.push([])
-        stepInteraction()
+        if (interact) {
+            newInteraction([1, key]);
+        }
     }
 
     function handleShow() {
+        newInteraction([2, show.length]);
         setShow([...show, true]);
     }
 
-    function clear() {
+    function clear(interact=true) {
+        const beforeClear = show;
         setShow(Array(show.length).fill(false));
+        if (interact) {
+            newInteraction([3, beforeClear]);
+        }
     }
 
-    return <>
+    return (<>
     <div className='center full'>
         <div>
             <div className='inlineDisplay center'>
-                <img src="/sun-behind-rain-cloud.svg" alt="hi there" className='imgFit' />
+                <img src="/sun-behind-rain-cloud.svg" title="hi there" className='imgFit' />
                 <div className='center' style={{width: "40vw",display: ac? "none":"flex"}}>
                     <div>
                         <h2 className='centerText'>Temperature Anywhere</h2>
@@ -58,10 +127,10 @@ function App() {
                 </div>
                 <div className='center' style={{width: "40vw",display: !ac? "none":"flex"}}>
                     <div>
-                        <button className="inlineButton">Undo</button>
-                        <button className="inlineButton">Redo</button><br/>
+                        <button onClick={undo} className="inlineButton">Undo</button>
+                        <button onClick={redo} className="inlineButton">Redo</button><br/>
                         <button onClick={clear} className="inlineButton">Clear</button>
-                        <button className="inlineButton">Save</button>
+                        <button onClick={()=>{}} className="inlineButton">Save</button>
                     </div>
                 </div>
                 <div className='center'>
@@ -78,7 +147,7 @@ function App() {
             </div>
         </div>
     </div>
-    </>;
+    </>);
 }
 
 export default App
