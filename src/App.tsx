@@ -1,17 +1,20 @@
 import './App.css';
 import Map from './Map';
 import { useState, useEffect } from 'react';
+import { LatLng } from 'leaflet';
 
 // @ts-ignore
 function App() {
     const [time, setTime] = useState<string>("");
     const [ac, setAc] = useState<boolean>(false);
     const [show, setShow] = useState<boolean[]>([]);
+    const [coords, setCoords] = useState<LatLng[]>([]);
+    const [lines, setLines] = useState<number[]>([]);
     // Is an array of pairs
     // First element in pair:
     // 1: Remove, 2: Add, 3: Clear
-    const [interactions, setInteractions] = useState<(number|boolean[])[][]>([])
-    const [step, setStep] = useState<number>(0)
+    const [interactions, setInteractions] = useState<(number|boolean[])[][]>([]);
+    const [step, setStep] = useState<number>(0);
 
     function updateDate() {
         let ttime = new Date();
@@ -22,6 +25,23 @@ function App() {
     setInterval(updateDate, 60000);
     useEffect(updateDate, []);
 
+    useEffect(()=>{
+        load();
+    }, []);
+
+    function load() {
+        const data = localStorage.getItem("coords");
+        console.log(data);
+        if (data==null) {
+            return;
+        }
+        const newCoords = JSON.parse(data);
+        
+        for (const i of newCoords) {
+            handleShow(i);
+        }
+    }
+
     function newInteraction(interaction:(number|boolean[])[]) {
         setStep(step+1);
         let newInteractions = interactions
@@ -31,7 +51,6 @@ function App() {
     }
 
     function undo() {
-        console.log(step, interactions);
         if (step<=0) {
             return;
         }
@@ -40,7 +59,6 @@ function App() {
     }
 
     function redo() {
-        console.log(step, interactions);
         if (step >= interactions.length) {
             return;
         }
@@ -101,9 +119,11 @@ function App() {
         }
     }
 
-    function handleShow() {
+    function handleShow(pos:LatLng) {
         newInteraction([2, show.length]);
-        setShow([...show, true]);
+        setShow(current => [...current, true]);
+        setLines(current => [...current, current.length]);
+        setCoords(current => [...current, pos]);
     }
 
     function clear(interact=true) {
@@ -114,6 +134,20 @@ function App() {
         }
     }
 
+    function save() {
+        const newCoords = [];
+
+        for(const i in show){
+            if (show[i]){
+                newCoords.push(coords[i]);
+            }
+        }
+
+        console.log(show, JSON.stringify(newCoords));
+
+        localStorage.setItem("coords", JSON.stringify(newCoords));
+    }
+    
     return (<>
     <div className='center full'>
         <div>
@@ -130,7 +164,8 @@ function App() {
                         <button onClick={undo} className="inlineButton">Undo</button>
                         <button onClick={redo} className="inlineButton">Redo</button><br/>
                         <button onClick={clear} className="inlineButton">Clear</button>
-                        <button onClick={()=>{}} className="inlineButton">Save</button>
+                        <button onClick={save} className="inlineButton">Save</button>
+                        {/* <button onClick={load} className='inlineButton'>Load</button> */}
                     </div>
                 </div>
                 <div className='center'>
@@ -139,7 +174,7 @@ function App() {
                     }}>Toggle actions</button>
                 </div>
             </div>
-            <Map remove={handleRemove} show={handleShow} isShown={show}/>
+            <Map remove={handleRemove} show={handleShow} isShown={show} coords={coords} setCoords={setCoords} lines={lines} setLines={setLines}/>
             <div className='center'>
                 <div>
                     <button className="inlineButton">Instructions</button>

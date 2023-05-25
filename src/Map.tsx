@@ -1,6 +1,5 @@
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
 import { useState, useEffect, } from 'react'
-import { LatLng } from 'leaflet';
 import axios from 'axios'
 
 // @ts-ignore
@@ -59,19 +58,16 @@ function TempMark(props) {
 
 // @ts-ignore
 function LocationMarker(props) {
-    const { remove, show, isShown } = props
-    const [lines, setLines] = useState<number[]>([]);
-    const [coords, setCoords] = useState<LatLng[]>([]); 
+    const { remove, show, isShown, coords, lines } = props
     const map = useMapEvents({
         click(e) {
             const pos = e.latlng;
             map.flyTo(pos, map.getZoom());
-            setLines([...lines, lines.length]);
-            setCoords([...coords, pos]);
-            show();
+            show(pos);
         },
     });
 
+    // @ts-ignore
     const renderElement = <div>{lines.map(m => isShown[m]? <TempMark key={m} remove={()=>{remove(m)}} count={m} coords={coords[m]}></TempMark> : null)}</div>;
 
     return renderElement;
@@ -79,14 +75,14 @@ function LocationMarker(props) {
 
 // @ts-ignore
 function Map(props) {
-    const {remove, show, isShown} = props;
+    const {remove, show, isShown, coords, setCoords, lines, setLines} = props;
     return <>
     <MapContainer center={[51.505, -0.09]} zoom={2} scrollWheelZoom={true}>
         <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' 
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-        <LocationMarker remove={remove} show={show} isShown={isShown}/>
+        <LocationMarker remove={remove} show={show} isShown={isShown} coords={coords} setCoords={setCoords} lines={lines} setLines={setLines}/>
     </MapContainer>
     </>;
 }
