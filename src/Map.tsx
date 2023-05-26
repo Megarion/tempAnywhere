@@ -1,6 +1,8 @@
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
 import { useState, useEffect, } from 'react'
 import axios from 'axios'
+import { useMap } from 'react-leaflet';
+import Locate from "leaflet.locatecontrol";
 
 // @ts-ignore
 function TempMark(props) {
@@ -56,13 +58,24 @@ function TempMark(props) {
     // (${coords.lat}, ${coords.lng})
 }
 
+function LocationSetter() {
+    const [displayed, setDisplay] = useState(false);
+    if (!displayed) {
+        const map = useMap();
+        const lc = new Locate();
+        lc.addTo(map);
+        setDisplay(true);
+    }
+    return null;
+}
+
 // @ts-ignore
 function LocationMarker(props) {
     const { remove, show, isShown, coords, lines } = props
-    const map = useMapEvents({
+    const mapEvents = useMapEvents({
         click(e) {
             const pos = e.latlng;
-            map.flyTo(pos, map.getZoom());
+            mapEvents.flyTo(pos, mapEvents.getZoom());
             show(pos);
         },
     });
@@ -83,6 +96,7 @@ function Map(props) {
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         <LocationMarker remove={remove} show={show} isShown={isShown} coords={coords} setCoords={setCoords} lines={lines} setLines={setLines}/>
+        <LocationSetter/>
     </MapContainer>
     </>;
 }

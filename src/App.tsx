@@ -25,6 +25,7 @@ function App() {
     useEffect(updateDate, []);
 
     useEffect(()=>{
+        clear();
         load();
     }, []);
 
@@ -36,7 +37,7 @@ function App() {
         const newCoords = JSON.parse(data);
         
         for (const i of newCoords) {
-            handleShow(i);
+            handleShow(i, false);
         }
     }
 
@@ -117,8 +118,10 @@ function App() {
         }
     }
 
-    function handleShow(pos:LatLng) {
-        newInteraction([2, show.length]);
+    function handleShow(pos:LatLng, interact=true) {
+        if (interact) {
+            newInteraction([2, show.length]);
+        }
         setShow(current => [...current, true]);
         setLines(current => [...current, current.length]);
         setCoords(current => [...current, pos]);
@@ -157,19 +160,14 @@ function App() {
                 <div className='center' style={{width: "40vw"}}>
                     <div>
                         <button onClick={undo} className="inlineButton">Undo</button>
-                        <button onClick={redo} className="inlineButton">Redo</button><br/>
+                        <button onClick={redo} className="inlineButton">Redo</button>
+                        {/* @ts-ignore */}
                         <button onClick={clear} className="inlineButton">Clear</button>
-                        {/* <button onClick={load} className='inlineButton'>Load</button> */}
                         <h3 className='centerText'>{time}</h3>
                     </div>
                 </div>
             </div>
             <Map remove={handleRemove} show={handleShow} isShown={show} coords={coords} setCoords={setCoords} lines={lines} setLines={setLines}/>
-            <div className='center'>
-                <div>
-                    <button className="inlineButton">Instructions</button>
-                </div>
-            </div>
         </div>
     </div>
     </>);
