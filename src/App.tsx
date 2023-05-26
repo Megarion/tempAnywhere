@@ -6,7 +6,6 @@ import { LatLng } from 'leaflet';
 // @ts-ignore
 function App() {
     const [time, setTime] = useState<string>("");
-    const [ac, setAc] = useState<boolean>(false);
     const [show, setShow] = useState<boolean[]>([]);
     const [coords, setCoords] = useState<LatLng[]>([]);
     const [lines, setLines] = useState<number[]>([]);
@@ -31,7 +30,6 @@ function App() {
 
     function load() {
         const data = localStorage.getItem("coords");
-        console.log(data);
         if (data==null) {
             return;
         }
@@ -143,35 +141,27 @@ function App() {
             }
         }
 
-        console.log(show, JSON.stringify(newCoords));
-
         localStorage.setItem("coords", JSON.stringify(newCoords));
     }
+
+    window.addEventListener("beforeunload", (ev) => {
+        ev.preventDefault();
+        save();
+    });
     
     return (<>
     <div className='center full'>
         <div>
             <div className='inlineDisplay center'>
                 <img src="/sun-behind-rain-cloud.svg" title="hi there" className='imgFit' />
-                <div className='center' style={{width: "40vw",display: ac? "none":"flex"}}>
-                    <div>
-                        <h2 className='centerText'>Temperature Anywhere</h2>
-                        <h3 className='centerText'>{time}</h3>
-                    </div>
-                </div>
-                <div className='center' style={{width: "40vw",display: !ac? "none":"flex"}}>
+                <div className='center' style={{width: "40vw"}}>
                     <div>
                         <button onClick={undo} className="inlineButton">Undo</button>
                         <button onClick={redo} className="inlineButton">Redo</button><br/>
                         <button onClick={clear} className="inlineButton">Clear</button>
-                        <button onClick={save} className="inlineButton">Save</button>
                         {/* <button onClick={load} className='inlineButton'>Load</button> */}
+                        <h3 className='centerText'>{time}</h3>
                     </div>
-                </div>
-                <div className='center'>
-                    <button onClick={() => {
-                        setAc(!ac);
-                    }}>Toggle actions</button>
                 </div>
             </div>
             <Map remove={handleRemove} show={handleShow} isShown={show} coords={coords} setCoords={setCoords} lines={lines} setLines={setLines}/>
