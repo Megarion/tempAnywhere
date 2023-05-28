@@ -46,10 +46,24 @@ pre {
 .inlineButton {
     display: inline-block;
     vertical-align: top;
-    margin: 5px;
-    width: 170px;
+    padding: 20px;
+    font-size: 50px;
+    transition: 0.2s ease-in-out;
+}
+
+.inlineButton:hover {
+    color: #646cff;
+    cursor: pointer;
+    scale: 1.1;
 }
 
 /* .inlineDisplay {
     display: flex;
 } */
+
+.top {
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding: 10px;
+}

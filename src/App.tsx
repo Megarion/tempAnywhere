@@ -2,6 +2,10 @@ import './App.css';
 import Map from './Map';
 import { useState, useEffect } from 'react';
 import { LatLng } from 'leaflet';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRotateLeft, faRotateRight, faTrash, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 // @ts-ignore
 function App() {
@@ -18,7 +22,7 @@ function App() {
     function updateDate() {
         let ttime = new Date();
         let hour = ttime.getUTCHours();
-        setTime(`Update time: ${ttime.toLocaleDateString()} ${hour.toString().length == 1? "0" : ""}${hour}:00:00 (UTC)`);
+        setTime(`${ttime.toLocaleDateString()} ${hour.toString().length == 1? "0" : ""}${hour}:00:00 (UTC)`);
     }
 
     setInterval(updateDate, 60000);
@@ -153,21 +157,29 @@ function App() {
     });
     
     return (<>
+    <div className='top'><a href='https://megarion.github.io' target='_blank'>Megarion</a></div>
     <div className='center full'>
         <div>
             <div className='inlineDisplay center'>
                 <img src="/sun-behind-rain-cloud.svg" title="hi there" className='imgFit' />
                 <div className='center' style={{width: "40vw"}}>
                     <div>
-                        <button onClick={undo} className="inlineButton">Undo</button>
+                        {/* <button onClick={undo} className="inlineButton">Undo</button>
                         <button onClick={redo} className="inlineButton">Redo</button>
-                        {/* @ts-ignore */}
-                        <button onClick={clear} className="inlineButton">Clear</button>
-                        <h3 className='centerText'>{time}</h3>
+                        <button onClick={clear} className="inlineButton">Clear</button> */}
+                        <div className='center'>
+                            <FontAwesomeIcon icon={faRotateLeft} className='inlineButton' title='Undo' onClick={undo}/>
+                            <FontAwesomeIcon icon={faRotateRight} className='inlineButton' title='Redo' onClick={redo}/>
+                            {/* @ts-ignore */}
+                            <FontAwesomeIcon icon={faTrash} className='inlineButton' title='Clear' onClick={clear}/>
+                            <FontAwesomeIcon icon={faQuestion} className='inlineButton' title='Help' data-tooltip-id="popup" data-tooltip-content="Click on the map to get temperature of a location. Click the marker to remove it."/>
+                        </div>
+                        <p className='centerText'><b>Update time: </b>{time}</p>
                     </div>
                 </div>
             </div>
             <Map remove={handleRemove} show={handleShow} isShown={show} coords={coords} setCoords={setCoords} lines={lines} setLines={setLines}/>
+            <Tooltip id='popup'/>
         </div>
     </div>
     </>);

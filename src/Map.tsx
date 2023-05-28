@@ -32,7 +32,7 @@ function TempMark(props) {
             axios.get(`https://api.meteomatics.com/${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day}T${hour.toString().length == 1? "0" : ""}${hour}:00:00.000Z/t_2m:C/${coords.lat},${coords.lng}/json?model=mix&access_token=${token}`, {
                 headers: {}
             }).then(dataresponse => {
-                console.log("SUCCESS", dataresponse);
+                // console.log("SUCCESS", dataresponse);
                 setTemp(dataresponse.data.data[0].coordinates[0].dates[0].value);
     
             }).catch(error => {
@@ -62,7 +62,8 @@ function LocationSetter() {
     const [displayed, setDisplay] = useState(false);
     if (!displayed) {
         const map = useMap();
-        const lc = new Locate();
+        // @ts-ignore
+        const lc = new Locate({flyTo: true});
         lc.addTo(map);
         setDisplay(true);
     }
