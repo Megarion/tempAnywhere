@@ -26,7 +26,11 @@ function TempMark(props) {
     // https://meteomatics.com/url-creator/
     useEffect(() => {
         axios.get(`https://login.meteomatics.com/api/v1/token`, {
-            headers: {'Authorization': 'Basic ' + btoa(username + ":" + password)}
+            headers: {
+                'Authorization': 'Basic ' + btoa(username + ":" + password), 
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            }
         }).then(response => {
             token = response.data.access_token
             axios.get(`https://api.meteomatics.com/${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day}T${hour.toString().length == 1? "0" : ""}${hour}:00:00.000Z/t_2m:C/${coords.lat},${coords.lng}/json?model=mix&access_token=${token}`, {
