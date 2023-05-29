@@ -161,7 +161,7 @@ function App() {
     <div className='center full'>
         <div>
             <div className='inlineDisplay center'>
-                <img src="/sun-behind-rain-cloud.svg" title="hi there" className='imgFit' />
+                <img src="/tempAnywhere/sun-behind-rain-cloud.svg" title="hi there" className='imgFit' />
                 <div className='center' style={{width: "40vw"}}>
                     <div>
                         {/* <button onClick={undo} className="inlineButton">Undo</button>
