@@ -23,37 +23,37 @@ function TempMark(props) {
     // https://login.meteomatics.com/api/v1/token
     // https://meteomatics.com/url-creator/
     useEffect(() => {
-        let token = "";
-        axios.get(`https://login.meteomatics.com/api/v1/token`, {
-            headers: {
-                'Authorization': 'Basic ' + btoa(username + ":" + password), 
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).then(response => {
-            token = response.data.access_token
-            axios.get(`https://api.meteomatics.com/${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day}T${hour.toString().length == 1? "0" : ""}${hour}:00:00.000Z/t_2m:C/${coords.lat},${coords.lng}/json?model=mix&access_token=${token}`, {
-                headers: {}
-            }).then(dataresponse => {
-                // console.log("SUCCESS", dataresponse);
-                setTemp(dataresponse.data.data[0].coordinates[0].dates[0].value);
+        // let token = "";
+        // axios.get(`https://login.meteomatics.com/api/v1/token`, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + btoa(username + ":" + password), 
+        //     }
+        // }).then(response => {
+        //     token = response.data.access_token
+        //     axios.get(`https://api.meteomatics.com/${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day}T${hour.toString().length == 1? "0" : ""}${hour}:00:00.000Z/t_2m:C/${coords.lat},${coords.lng}/json?model=mix&access_token=${token}`, {
+        //         headers: {}
+        //     }).then(dataresponse => {
+        //         // console.log("SUCCESS", dataresponse);
+        //         setTemp(dataresponse.data.data[0].coordinates[0].dates[0].value);
     
-            }).catch(error => {
-                console.log(error);
-            });
+        //     }).catch(error => {
+        //         console.log(error);
+        //     });
     
-        }).catch(error => {
-            console.log(error);
-        });
-
-        // axios.get(`https://${username}:${password}@api.meteomatics.com/${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day}T${hour.toString().length == 1? "0" : ""}${hour}:00:00.000Z/t_2m:C/${coords.lat},${coords.lng}/json?model=mix`, {
-        //     headers: {}
-        // }).then(dataresponse => {
-        //     // console.log("SUCCESS", dataresponse);
-        //     setTemp(dataresponse.data.data[0].coordinates[0].dates[0].value);
-
         // }).catch(error => {
         //     console.log(error);
         // });
+        axios.get(`https://api.meteomatics.com/${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day}T${hour.toString().length == 1? "0" : ""}${hour}:00:00.000Z/t_2m:C/${coords.lat},${coords.lng}/json?model=mix`, {
+            headers: {
+                'Authorization': 'Basic ' + btoa(username + ":" + password), 
+            }
+        }).then(dataresponse => {
+            // console.log("SUCCESS", dataresponse);
+            setTemp(dataresponse.data.data[0].coordinates[0].dates[0].value);
+
+        }).catch(error => {
+            console.log(error);
+        });
     }, []);
 
     return <Marker position={coords}
