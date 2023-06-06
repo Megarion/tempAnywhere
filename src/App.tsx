@@ -9,7 +9,6 @@ import "react-tooltip/dist/react-tooltip.css";
 
 // @ts-ignore
 function App() {
-    const [time, setTime] = useState<string>("");
     const [show, setShow] = useState<boolean[]>([]);
     const [coords, setCoords] = useState<LatLng[]>([]);
     const [lines, setLines] = useState<number[]>([]);
@@ -18,15 +17,6 @@ function App() {
     // 1: Remove, 2: Add, 3: Clear
     const [interactions, setInteractions] = useState<(number|boolean[])[][]>([]);
     const [step, setStep] = useState<number>(0);
-
-    function updateDate() {
-        let ttime = new Date();
-        let hour = ttime.getUTCHours();
-        setTime(`${ttime.toLocaleDateString()} ${hour.toString().length == 1? "0" : ""}${hour}:00:00 (UTC)`);
-    }
-
-    setInterval(updateDate, 60000);
-    useEffect(updateDate, []);
 
     useEffect(()=>{
         clear();
@@ -161,7 +151,7 @@ function App() {
     <div className='center full'>
         <div>
             <div className='inlineDisplay center'>
-                <img src="/tempAnywhere/sun-behind-rain-cloud.svg" title="hi there" className='imgFit' />
+                <img src="/tempAnywhere/305.png" title="hi there" className='imgFit' />
                 <div className='center' style={{width: "40vw"}}>
                     <div>
                         {/* <button onClick={undo} className="inlineButton">Undo</button>
@@ -172,9 +162,8 @@ function App() {
                             <FontAwesomeIcon icon={faRotateRight} className='inlineButton' title='Redo' onClick={redo}/>
                             {/* @ts-ignore */}
                             <FontAwesomeIcon icon={faTrash} className='inlineButton' title='Clear' onClick={clear}/>
-                            <FontAwesomeIcon icon={faQuestion} className='inlineButton' title='Help' data-tooltip-id="popup" data-tooltip-content="Click on the map to get temperature of a location. Click the marker to remove it."/>
+                            <FontAwesomeIcon icon={faQuestion} className='inlineButton' title='Help' data-tooltip-id="popup" data-tooltip-content="Click on the map to get temperature of a location. Right click the marker to remove it."/>
                         </div>
-                        <p className='centerText'><b>Update time: </b>{time}</p>
                     </div>
                 </div>
             </div>

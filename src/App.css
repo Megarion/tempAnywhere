@@ -67,3 +67,46 @@ pre {
     position: absolute;
     padding: 10px;
 }
+
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1001;
+    /* flex is already a thing in the code */
+
+    backdrop-filter: blur(10px) brightness(40%);
+}
+
+.arrow {
+    padding: 0 20px;
+    transition: 0.2s ease-out;
+    scale: 1.7;
+}
+
+.arrow:hover {
+    scale: 2;
+    color: #646cff;
+    cursor: pointer;
+}
+
+.nosel {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.box {
+    background-color: rgba(255, 255, 255, 0.116);
+    width: 125px;
+    height: 250px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: top;
+}
