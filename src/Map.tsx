@@ -26,7 +26,7 @@ function TempMark(props) {
     // http://api.weatherapi.com/v1/history.json?key=${KEY}&q=${coords.lat},${coords.lng}&dt=${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day-1}&end_dt=${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""
     // */
     useEffect(() => {
-        axios.get(`http://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${coords.lat},${coords.lng}&days=7`, {headers: {}}).then(dataresponse => {
+        axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${coords.lat},${coords.lng}&days=7`, {headers: {}}).then(dataresponse => {
             console.log("SUCCESS", dataresponse);
             setDatasave(dataresponse.data);
             setLoc(`${dataresponse.data.location.name}, ${dataresponse.data.location.country}`);
