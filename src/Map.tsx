@@ -27,10 +27,8 @@ function TempMark(props) {
     // */
     useEffect(() => {
         axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${coords.lat},${coords.lng}&days=7`, {headers: {}}).then(dataresponse => {
-            console.log("SUCCESS", dataresponse);
             setDatasave(dataresponse.data);
             setLoc(`${dataresponse.data.location.name}, ${dataresponse.data.location.country}`);
-
         }).catch(error => {
             console.log(error);
         });
@@ -166,7 +164,6 @@ function Map(props) {
             newMode=0;
         }
         setMode(newMode);
-        console.log(mode);
     }
 
     return <>
