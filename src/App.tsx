@@ -151,7 +151,6 @@ function App() {
     <div className='center full'>
         <div>
             <div className='inlineDisplay center'>
-                <img src="/tempAnywhere/305.png" title="hi there" className='imgFit' />
                 <div className='center' style={{width: "40vw"}}>
                     <div>
                         {/* <button onClick={undo} className="inlineButton">Undo</button>

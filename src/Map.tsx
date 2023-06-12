@@ -167,8 +167,8 @@ function Map(props) {
     }
 
     return <>
-    <div className='popup' style={{display: popup? "flex" : "none"}}>
-    <div className='centerText nosel'>
+    <div className='popup' style={{display: popup? "flex" : "none", overflowY: "auto"}}>
+    <div className='centerText nosel' style={{height: "100vh"}}>
         <h1>{location}</h1>
         <div style={{fontSize: "25px", display: "flex"}} className='center'>
             <FontAwesomeIcon icon={faChevronLeft} className='arrow' onClick={()=>{modifyMode(-1)}} />
