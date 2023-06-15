@@ -15,7 +15,7 @@ function TempMark(props) {
 
     useEffect(() => {
         // http://localhost:3000/
-        axios.get(`https://megarion.github.io/tempAnywhere/temp?lat=${coords.lat}&lng=${coords.lng}`, {headers: {}}).then(dataresponse => {
+        axios.get(`https://temp-anywhere.vercel.app/temp?lat=${coords.lat}&lng=${coords.lng}`, {headers: {}}).then(dataresponse => {
             setDatasave(dataresponse.data);
             setLoc(`${dataresponse.data.location.name}, ${dataresponse.data.location.country} (Click to view more)`);
         }).catch(error => {
