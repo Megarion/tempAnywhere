@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import rateLimit from 'express-rate-limit'
 
 const app = express();
+ViteExpress.config({ mode: "production" });
 dotenv.config();
 
 const limiter = rateLimit({
