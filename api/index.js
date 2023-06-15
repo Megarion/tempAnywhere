@@ -1,12 +1,20 @@
-import express from "express";
-import ViteExpress from "vite-express";
 import axios from "axios";
-import dotenv from "dotenv"
-import rateLimit from 'express-rate-limit'
+import rateLimit from 'express-rate-limit';
+const app = require('express')();
+import { v4 } from 'uuid';
+require('dotenv').config();
 
-const app = express();
-ViteExpress.config({ mode: "production" });
-dotenv.config();
+app.get('/api', (req, res) => {
+  const path = `/api/item/${v4()}`;
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+});
+
+app.get('/api/item/:slug', (req, res) => {
+  const { slug } = req.params;
+  res.end(`Item: ${slug}`);
+});
 
 const limiter = rateLimit({
 	windowMs: 1 * 60 * 1000, // 15 minutes
@@ -15,7 +23,6 @@ const limiter = rateLimit({
 	legacyHeaders: false,
 })
 
-// Apply the rate limiting middleware to all requests
 app.use("/temp", limiter)
 
 app.get("/temp", (req, res) => {
@@ -30,6 +37,4 @@ app.get("/temp", (req, res) => {
     });
 });
 
-ViteExpress.listen(app, 3000, () =>
-    console.log("Server is listening on port 3000...")
-);
+export default app;
