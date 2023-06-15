@@ -10,27 +10,17 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 function TempMark(props) {
     const {coords,remove,info} = props;
 
-    const KEY=import.meta.env.VITE_KEY;
-
     let [loc, setLoc] = useState<string|null>(null);
     let [datasave, setDatasave] = useState(null);
 
-    // let time = new Date();
-    // let year = time.getUTCFullYear();
-    // let month = time.getUTCMonth()+1; // +1 because it's 1 off
-    // let day = time.getUTCDate();
-
-    // // https://www.weatherapi.com/docs/
-    // /* 
-    // Get data from past 2 days
-    // http://api.weatherapi.com/v1/history.json?key=${KEY}&q=${coords.lat},${coords.lng}&dt=${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""}${day-1}&end_dt=${year}-${month.toString().length == 1? "0" : ""}${month}-${day.toString().length == 1? "0" : ""
-    // */
     useEffect(() => {
-        axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${coords.lat},${coords.lng}&days=7`, {headers: {}}).then(dataresponse => {
+        axios.get(`http://localhost:3000/temp?lat=${coords.lat}&lng=${coords.lng}`, {headers: {}}).then(dataresponse => {
             setDatasave(dataresponse.data);
-            setLoc(`${dataresponse.data.location.name}, ${dataresponse.data.location.country}`);
+            setLoc(`${dataresponse.data.location.name}, ${dataresponse.data.location.country} (Click to view more)`);
         }).catch(error => {
             console.log(error);
+            // error.response.data
+            setLoc(`Error: ${typeof error.response.data== "string"? error.response.data : error.response.data.message}`);
         });
     }, []);
 
@@ -45,7 +35,7 @@ function TempMark(props) {
     }}
     >
         <Popup>
-            {loc}<br/><i>Click to see more details</i>
+            {loc}
         </Popup>
     </Marker>;
     // (${coords.lat}, ${coords.lng})
@@ -86,7 +76,7 @@ function Map(props) {
     const [popup, showPopup] = useState(false);
     const [mode, setMode] = useState<number>(0);
     const [display, setDisplay] = useState<any[]|null>(null);
-    const [location, setLocation] = useState("")
+    const [location, setLocation] = useState("");
 
     function showInfo(data:any) {
         const forecast = data.forecast.forecastday
