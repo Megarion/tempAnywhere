@@ -14,7 +14,8 @@ function TempMark(props) {
     let [datasave, setDatasave] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/temp?lat=${coords.lat}&lng=${coords.lng}`, {headers: {}}).then(dataresponse => {
+        // http://localhost:3000/
+        axios.get(`https://megarion.github.io/tempAnywhere/temp?lat=${coords.lat}&lng=${coords.lng}`, {headers: {}}).then(dataresponse => {
             setDatasave(dataresponse.data);
             setLoc(`${dataresponse.data.location.name}, ${dataresponse.data.location.country} (Click to view more)`);
         }).catch(error => {
