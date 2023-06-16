@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "nodemon api/index.ts -w api",
-    "start": "SET NODE_ENV=production ts-node api/index.ts",
+    "dev": "nodemon api/index.js -w api",
+    "start": "SET NODE_ENV=production ts-node api/index.js",
     "build": "vite build"
   },
   "dependencies": {

@@ -17,6 +17,7 @@ function TempMark(props) {
         // http://localhost:3000/
         axios.get(`https://temp-anywhere.vercel.app/api?lat=${coords.lat}&lng=${coords.lng}`, {headers: {}}).then(dataresponse => {
             setDatasave(dataresponse.data);
+            console.log(dataresponse.data);
             setLoc(`${dataresponse.data.location.name}, ${dataresponse.data.location.country} (Click to view more)`);
         }).catch(error => {
             console.log(error);
