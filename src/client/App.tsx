@@ -2,8 +2,8 @@ import './App.css';
 import Map from './Map';
 import { useState, useEffect } from 'react';
 import { LatLng } from 'leaflet';
-import { FontAwesomeIcon } from '/@fortawesome/react-fontawesome'
-import { faRotateLeft, faRotateRight, faTrash, faQuestion } from '/@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRotateLeft, faRotateRight, faTrash, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
