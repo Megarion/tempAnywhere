@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useMap } from 'react-leaflet';
 import Locate from "leaflet.locatecontrol";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 // @ts-ignore
 function TempMark(props) {
@@ -163,9 +161,9 @@ function Map(props) {
     <div className='centerText nosel' style={{height: "100vh"}}>
         <h1>{location}</h1>
         <div style={{fontSize: "25px", display: "flex"}} className='center'>
-            <FontAwesomeIcon icon={faChevronLeft} className='arrow' onClick={()=>{modifyMode(-1)}} />
+            <i className="fa-solid fa-chevron-left arrow" onClick={()=>{modifyMode(-1)}}></i>
             <div style={{width: "200px"}}>{mode2text(mode)}</div>
-            <FontAwesomeIcon icon={faChevronRight} className='arrow' onClick={()=>{modifyMode(1)}} />
+            <i className="fa-chevron-right arrow" onClick={()=>{modifyMode(1)}} />
         </div>
         <br/>
         <div style={{width: "100vw"}}>

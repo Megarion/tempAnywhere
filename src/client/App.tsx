@@ -2,8 +2,6 @@ import './App.css';
 import Map from './Map';
 import { useState, useEffect } from 'react';
 import { LatLng } from 'leaflet';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRotateLeft, faRotateRight, faTrash, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -157,11 +155,11 @@ function App() {
                         <button onClick={redo} className="inlineButton">Redo</button>
                         <button onClick={clear} className="inlineButton">Clear</button> */}
                         <div className='center'>
-                            <FontAwesomeIcon icon={faRotateLeft} className='inlineButton' title='Undo' onClick={undo}/>
-                            <FontAwesomeIcon icon={faRotateRight} className='inlineButton' title='Redo' onClick={redo}/>
+                            <i className='fa-solid fa-rotate-left inlineButton' title='Undo' onClick={undo}/>
+                            <i className='fa-solid fa-rotate-right inlineButton' title='Redo' onClick={redo}/>
                             {/* @ts-ignore */}
-                            <FontAwesomeIcon icon={faTrash} className='inlineButton' title='Clear' onClick={clear}/>
-                            <FontAwesomeIcon icon={faQuestion} className='inlineButton' title='Help' data-tooltip-id="popup" data-tooltip-content="Click on the map to get temperature of a location. Right click the marker to remove it."/>
+                            <i className='fa-solid fa-trash inlineButton' title='Clear' onClick={clear}/>
+                            <i className='fa-solid fa-question inlineButton' title='Help' data-tooltip-id="popup" data-tooltip-content="Click on the map to get temperature of a location. Right click the marker to remove it."/>
                         </div>
                     </div>
                 </div>
