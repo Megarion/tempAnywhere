@@ -9,11 +9,11 @@ const limiter = rateLimit({
 	max: 3, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 	standardHeaders: true,
 	legacyHeaders: false,
-})
+});
 
-app.use("/api", limiter)
+app.use("/api", limiter);
 
-app.get("/api", (req, res) => {
+app.get("/api", (req:any, res:any) => {
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const params = req.query;
@@ -22,7 +22,7 @@ app.get("/api", (req, res) => {
     // @ts-ignore
     axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${params.lat},${params.lng}&days=7`, {headers: {}}).then(dataresponse => {
         res.json(dataresponse.data);
-    }).catch(error => {
+    }).catch((error:any) => {
         res.status(500).json(error);
     });
 });
