@@ -14,6 +14,8 @@ const limiter = rateLimit({
 app.use("/api", limiter)
 
 app.get("/api", (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const params = req.query;
     // @ts-ignore
     const KEY = process.env.VITE_KEY;
