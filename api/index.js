@@ -13,7 +13,7 @@ const limiter = rateLimit({
 
 app.use("/api", limiter);
 
-app.get("/api", (req:any, res:any) => {
+app.get("/api", (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const params = req.query;
@@ -22,7 +22,7 @@ app.get("/api", (req:any, res:any) => {
     // @ts-ignore
     axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${params.lat},${params.lng}&days=7`, {headers: {}}).then(dataresponse => {
         res.json(dataresponse.data);
-    }).catch((error:any) => {
+    }).catch((error) => {
         res.status(500).json(error);
     });
 });
