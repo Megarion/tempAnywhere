@@ -109,7 +109,8 @@ function Map(props) {
         }
 
         setDisplay(fa);
-        setLocation(`${data.location.name}, ${data.location.country}`)
+        setLocation(`${data.location.name}, ${data.location.country}`);
+        console.log(display);
 
         // show popup
         showPopup(true);
