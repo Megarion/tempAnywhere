@@ -1,4 +1,3 @@
-const axios = require("axios");
 const rateLimit = require('express-rate-limit');
 const app = require('express')();
 // import { v4 } from 'uuid';
