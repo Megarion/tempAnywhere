@@ -1,6 +1,7 @@
-const axios = require("axios");
-const rateLimit = require('express-rate-limit');
-const app = require('express')();
+import axios from "axios";
+import { rateLimit } from "express-rate-limit";
+import { Express } from "express";
+const app = Express();
 // import { v4 } from 'uuid';
 require('dotenv').config();
 
