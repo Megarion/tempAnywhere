@@ -109,7 +109,6 @@ function Map(props) {
 
         setDisplay(fa);
         setLocation(`${data.location.name}, ${data.location.country}`);
-        console.log(display);
 
         // show popup
         showPopup(true);
@@ -163,7 +162,7 @@ function Map(props) {
         <div style={{fontSize: "25px", display: "flex"}} className='center'>
             <i className="fa-solid fa-chevron-left arrow" onClick={()=>{modifyMode(-1)}}></i>
             <div style={{width: "200px"}}>{mode2text(mode)}</div>
-            <i className="fa-chevron-right arrow" onClick={()=>{modifyMode(1)}} />
+            <i className="fa-solid fa-chevron-right arrow" onClick={()=>{modifyMode(1)}} />
         </div>
         <br/>
         <div style={{width: "100vw"}}>
