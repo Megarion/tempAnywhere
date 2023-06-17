@@ -14,7 +14,6 @@ function TempMark(props) {
     useEffect(() => {
         // http://localhost:3000/
         axios.get(`https://temp-anywhere.vercel.app/api?lat=${coords.lat}&lng=${coords.lng}`, {headers: {}}).then(dataresponse => {
-            console.log(dataresponse.data);
             setDatasave(dataresponse.data);
             setLoc(`${dataresponse.data.location.name}, ${dataresponse.data.location.country} (Click to view more)`);
         }).catch(error => {
@@ -188,30 +187,6 @@ function Map(props) {
                         {display[2][mode].temp_c}&#176;C/{display[2][mode].temp_f}&#176;F<br/> 
                         <br/><img src={display[2][mode].condition_icon}/><br/>
                         {display[2][mode].condition_text}
-                    </div>
-                    <div className='box centerText'>
-                        <b>{display[3][mode].date}</b><br/>
-                        {display[3][mode].temp_c}&#176;C/{display[3][mode].temp_f}&#176;F<br/> 
-                        <br/><img src={display[3][mode].condition_icon}/><br/>
-                        {display[3][mode].condition_text}
-                    </div>
-                    <div className='box centerText'>
-                        <b>{display[4][mode].date}</b><br/>
-                        {display[4][mode].temp_c}&#176;C/{display[4][mode].temp_f}&#176;F<br/> 
-                        <br/><img src={display[4][mode].condition_icon}/><br/>
-                        {display[4][mode].condition_text}
-                    </div>
-                    <div className='box centerText'>
-                        <b>{display[5][mode].date}</b><br/>
-                        {display[5][mode].temp_c}&#176;C/{display[5][mode].temp_f}&#176;F<br/> 
-                        <br/><img src={display[5][mode].condition_icon}/><br/>
-                        {display[5][mode].condition_text}
-                    </div>
-                    <div className='box centerText'>
-                        <b>{display[6][mode].date}</b><br/>
-                        {display[6][mode].temp_c}&#176;C/{display[6][mode].temp_f}&#176;F<br/> 
-                        <br/><img src={display[6][mode].condition_icon}/><br/>
-                        {display[6][mode].condition_text}
                     </div>
                 </>
             }
