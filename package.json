@@ -2,6 +2,7 @@
   "name": "vite-react-typescript-starter",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "nodemon api/index.js -w api",
     "start": "SET NODE_ENV=production ts-node api/index.js",
@@ -13,7 +14,6 @@
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
     "leaflet": "^1.9.4",
-    "node-fetch": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
