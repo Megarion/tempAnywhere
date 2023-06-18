@@ -48,6 +48,8 @@ function LocationSetter() {
         const lc = new Locate({flyTo: true});
         lc.addTo(map);
         setDisplay(true);
+
+        map.setMaxBounds(map.getBounds());
     }
     return null;
 }
@@ -76,13 +78,6 @@ function Map(props) {
     const [mode, setMode] = useState<number>(0);
     const [display, setDisplay] = useState<any[]|null>(null);
     const [location, setLocation] = useState("");
-    const [haveSet, setHaveSet] = useState(false);
-
-    if (!haveSet) {
-        setHaveSet(true);
-        const map = useMap();
-        map.setMaxBounds(map.getBounds());
-    }
 
     function showInfo(data:any) {
         const forecast = data.forecast.forecastday
