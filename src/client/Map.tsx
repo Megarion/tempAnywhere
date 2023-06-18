@@ -76,6 +76,13 @@ function Map(props) {
     const [mode, setMode] = useState<number>(0);
     const [display, setDisplay] = useState<any[]|null>(null);
     const [location, setLocation] = useState("");
+    const [haveSet, setHaveSet] = useState(false);
+
+    if (!haveSet) {
+        setHaveSet(true);
+        const map = useMap();
+        map.setMaxBounds(map.getBounds());
+    }
 
     function showInfo(data:any) {
         const forecast = data.forecast.forecastday
@@ -120,9 +127,6 @@ function Map(props) {
     }
 
     useEffect(() => {
-        const map = useMap();
-        map.setMaxBounds(map.getBounds());
-
         // define a custom handler function
         // for the contextmenu event
         // @ts-ignore
