@@ -120,6 +120,9 @@ function Map(props) {
     }
 
     useEffect(() => {
+        const map = useMap();
+        map.setMaxBounds(map.getBounds());
+
         // define a custom handler function
         // for the contextmenu event
         // @ts-ignore
