@@ -7,9 +7,9 @@ A web app to obtain weather forecast data anywhere on the map
 
 
 ## Functionality:
-- Add markers on a map
+- Add markers on a map<br>
 ![screenshot](public/screenshot1.png "Markers")
-- Reveal weather data on click
+- Reveal weather data on click<br>
 ![screenshot](public/screenshot2.png "Popup")
 
 ## Acknowledgements
