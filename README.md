@@ -8,10 +8,10 @@ A web app to obtain weather forecast data anywhere on the map
 
 ## Functionality:
 - Add markers on a map<br>
-![screenshot](public/screenshot1.png "Markers")
+![screenshot](public/screenshot2.png "Markers")
 
 - Reveal weather data on click<br>
-![screenshot](public/screenshot2.png "Popup")
+![screenshot](public/screenshot1.png "Popup")
 
 ## Acknowledgements
  - [WeatherAPI](https://awesomeopensource.com/project/elangosundar/awesome-README-templates), the API used for getting geolocation and weather data 
